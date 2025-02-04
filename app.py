@@ -65,9 +65,9 @@ def register_user():
             cursor.close()
             db_connection_object.close()
         else:
-            logging.info("Some error occured while connecting to MySQL Database")
+            logging.info("Some error occurred while connecting to MySQL Database")
             logging.error(json.dumps({
-                "message": "Repository created successfully but some error occured while connecting to MySQL Database"}))
+                "message": "Repository created successfully but some error occurred while connecting to MySQL Database"}))
             return render_template("error_page.html")
 
         response_status_code_for_base_file_creation = create_readme_file(owner_name, USER_TOKEN)
@@ -93,13 +93,13 @@ def register_user():
                                    message="Congratulations! Take a break while I do the hard work for you")
         else:
             logging.error(json.dumps({"ERR_STATUS_CODE": response_status_code_for_base_file_creation.status_code,
-                                      "message": "Some error occured while creating the file in the repository"}))
+                                      "message": "Some error occurred while creating the file in the repository"}))
             return render_template("error_page.html")
     else:
         logging.info(f"Eror Message: {response.json()}")
-        logging.info("Some error occured while creating the repository")
+        logging.info("Some error occurred while creating the repository")
         logging.error(json.dumps(
-            {"ERR_STATUS_CODE": response.status_code, "message": "Some error occured while creating the repository"})
+            {"ERR_STATUS_CODE": response.status_code, "message": "Some error occurred while creating the repository"})
         )
         return render_template("error_page.html")
 
