@@ -11,7 +11,7 @@ jobs:
       - name: Set up Postgres so that SonarQube can communicate with the DB
         run: docker run -d -p 5432:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=password123 -e POSTGRES_DB=sonarreports --name=redcoffee-db --network=redcoffee-network postgres:latest
       - name: Set up SonarQube Container
-        run: docker run -d -p 9000:9000 -e SONAR_JDBC_URL=jdbc:postgresql://redcoffee-db:5432/sonarreports -e SONAR_JDBC_USERNAME=root -e SONAR_JDBC_PASSWORD=password123 --name=redcoffee-sonarqube --network=redcoffee-network sonarqube:community
+        run: docker run -d -p 9000:9000 -e SONAR_JDBC_URL=jdbc:postgresql://redcoffee-db:5432/sonarreports -e SONAR_JDBC_USERNAME=root -e SONAR_JDBC_PASSWORD=password123 --memory="2g" --name=redcoffee-sonarqube --network=redcoffee-network sonarqube:community
       - name: Wait for SonarQube to Start
         run: |
           echo "Waiting for SonarQube to be ready..."
