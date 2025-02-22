@@ -4,44 +4,6 @@ jobs:
   SonarCheck:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-      - name: Creating a Network so that SonarQube and Postgres DB can communicate with each other
-        run: docker network create redcoffee-network
-      - name: Set up Postgres so that SonarQube can communicate with the DB
-        run: docker run -d -p 5432:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=password123 -e POSTGRES_DB=sonarreports --name=redcoffee-db --network=redcoffee-network postgres:latest
-      - name: Set up SonarQube Container
-        run: docker run -d -p 9000:9000 -e SONAR_JDBC_URL=jdbc:postgresql://redcoffee-db:5432/sonarreports -e SONAR_JDBC_USERNAME=root -e SONAR_JDBC_PASSWORD=password123 --memory="2g" --name=redcoffee-sonarqube --network=redcoffee-network sonarqube:community
-      - name: Wait for SonarQube to Start
-        run: |
-          echo "Waiting for SonarQube to be ready..."
-          until curl -s "http://localhost:9000/api/system/status" | grep -q '"status":"UP"'; do
-            sleep 10
-          done
-          echo "SonarQube is up and running!"
-      - name: Force Password Reset
-        run: curl -X POST "http://localhost:9000/api/users/change_password" -u "admin:admin" -H "Content-Type:application/x-www-form-urlencoded" -d "login=admin&previousPassword=admin&password=HelloSonarqube9#"
-      - name: Create a User Token
-        run: |
-          SONARQUBE_TOKEN=$(curl -X POST "http://localhost:9000/api/user_tokens/generate" -u "admin:HelloSonarqube9#" -H "Content-Type:application/x-www-form-urlencoded" -d "name=RedCoffeeToken" | jq -r ".token")
-          echo "SONARQUBE_TOKEN=$SONARQUBE_TOKEN" >> $GITHUB_ENV
-      - name: Run SonarQube / SonarScanner Analysis
-        run: |
-          docker run --rm \
-            -e SONAR_HOST_URL="http://redcoffee-sonarqube:9000" \
-            -e SONAR_TOKEN=${{ env.SONARQUBE_TOKEN }} \
-            --network=redcoffee-network \
-            -v "$(pwd):/usr/src" sonarsource/sonar-scanner-cli \
-            -Dsonar.projectKey=${{ github.event.repository.name }} \
-            -Dsonar.sources=.
-      - name: Install RedCoffee
-        run: pip install redcoffee==1.8
-      - name: Generate the PDF Report
-        run: redcoffee generatepdf --host="localhost:9000" --project=${{ github.event.repository.name }} --path=report.pdf --token=${{ env.SONARQUBE_TOKEN }}
-        
-      - name: Upload PDF Report as Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: sonar-report
-          path: report.pdf
+      - name: Use RedCoffee for Github Actions
+        uses: Anubhav9/redcoffee-for-github-actions@v1.2
 
