@@ -39,10 +39,9 @@ jobs:
       - name: Generate the PDF Report
         run: redcoffee generatepdf --host="localhost:9000" --project=redcoffee-Analysis --path=report.pdf --token=${{ env.SONARQUBE_TOKEN }}
         
-      - name: Upload to slack step
-        uses: adrey/slack-file-upload-action@master
+      - name: Upload PDF Report as Artifact
+        uses: actions/upload-artifact@v3
         with:
-          token: ${{ secrets.SLACK_TOKEN }}
+          name: sonar-report
           path: report.pdf
-          channel: general
 
