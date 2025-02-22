@@ -37,7 +37,7 @@ jobs:
       - name: Install RedCoffee
         run: pip install redcoffee==1.8
       - name: Generate the PDF Report
-        run: redcoffee generatepdf --host="localhost:9000" --project=redcoffee-Analysis --path=report.pdf --token=${{ env.SONARQUBE_TOKEN }}
+        run: redcoffee generatepdf --host="localhost:9000" --project=${{ github.event.repository.name }} --path=report.pdf --token=${{ env.SONARQUBE_TOKEN }}
         
       - name: Upload PDF Report as Artifact
         uses: actions/upload-artifact@v4
