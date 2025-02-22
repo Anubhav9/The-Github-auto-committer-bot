@@ -38,16 +38,13 @@ jobs:
         run: pip install redcoffee==1.8
       - name: Generate the PDF Report
         run: redcoffee generatepdf --host="localhost:9000" --project=redcoffee-Analysis --path=report.pdf --token=${{ env.SONARQUBE_TOKEN }}
-      - name: Use RTBot to Send Message to Slack
-        uses: rtCamp/action-slack-notify@v2
-        env:
-          SLACK_CHANNEL: general
-          SLACK_MESSAGE: 'Post Content :rocket:'
-          SLACK_TITLE: Post Title
-          SLACK_USERNAME: rtCamp
-          SLACK_FILE_UPLOAD: "report.pdf"
-          SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        
+      - name: Upload to slack step
+        uses: adrey/slack-file-upload-action@master
+        with:
+          token: ${{ secrets.SLACK_TOKEN }}
+          path: report.pdf
+          channel: general
 
 
   
