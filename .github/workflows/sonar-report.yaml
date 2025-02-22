@@ -40,7 +40,7 @@ jobs:
         run: redcoffee generatepdf --host="localhost:9000" --project=redcoffee-Analysis --path=report.pdf --token=${{ env.SONARQUBE_TOKEN }}
         
       - name: Upload PDF Report as Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: sonar-report
           path: report.pdf
