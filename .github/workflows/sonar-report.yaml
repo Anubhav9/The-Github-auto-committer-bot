@@ -1,8 +1,7 @@
 name: RedCoffee Bot
-on:
-  push
+on: push
 jobs:
-  Run SonarQube Analysis on the Project:
+  SonarCheck:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
