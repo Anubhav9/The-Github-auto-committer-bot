@@ -30,6 +30,7 @@ jobs:
           docker run --rm \
             -e SONAR_HOST_URL="http://localhost:9000" \
             -e SONAR_LOGIN=${{ env.SONARQUBE_TOKEN }} \
+            --network=redcoffee-network \
             -v "$(pwd):/usr/src" sonarsource/sonar-scanner-cli \
             -Dsonar.projectKey=redCoffee-Analysis \
             -Dsonar.sources=.
