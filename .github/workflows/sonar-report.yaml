@@ -35,7 +35,9 @@ jobs:
             -Dsonar.projectKey=redCoffee-Analysis \
             -Dsonar.sources=.
       - name: CD into repository directory
-        run: cd ${{ github.event.repository.name }}
+        run: |
+          ls
+          cd ${{ github.event.repository.name }}
       - name: Install RedCoffee
         run: pip install redcoffee==1.8
       - name: Generate the PDF Report
