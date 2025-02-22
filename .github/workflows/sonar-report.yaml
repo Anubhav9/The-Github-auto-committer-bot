@@ -45,7 +45,7 @@ jobs:
           SLACK_MESSAGE: 'Post Content :rocket:'
           SLACK_TITLE: Post Title
           SLACK_USERNAME: rtCamp
-          SLACK_FILE_UPLOAD: report.pdf
+          SLACK_FILE_UPLOAD: "report.pdf"
           SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
 
