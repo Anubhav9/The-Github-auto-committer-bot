@@ -5,7 +5,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Use RedCoffee for Github Actions
-        uses: Anubhav9/redcoffee-for-github-actions@v2.5
+        uses: Anubhav9/redcoffee-for-github-actions@v2.6
         
         
 
